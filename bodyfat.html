@@ -20,25 +20,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
     }
 
     .container {
       background: white;
-      padding: 25px;
+      padding: 30px;
       border-radius: 15px;
       box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
       width: 100%;
-      max-width: 500px;
     }
 
     .title-box {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .site-title {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 800;
       background: linear-gradient(to right, #0d47a1, #1976d2);
       -webkit-background-clip: text;
@@ -64,7 +63,6 @@
       font-weight: 600;
       margin-top: 10px;
       display: block;
-      font-size: 14px;
     }
 
     input, select {
@@ -87,7 +85,6 @@
       width: 100%;
       cursor: pointer;
       transition: background 0.3s ease;
-      font-size: 15px;
     }
 
     button:hover {
@@ -100,28 +97,16 @@
       border-radius: 10px;
       background: #e1f5fe;
       border-left: 5px solid #039be5;
-      font-size: 14px;
     }
 
     #dietPlan h3 {
       margin-top: 0;
       color: #0277bd;
     }
-
-    @media (max-width: 480px) {
-      .site-title {
-        font-size: 24px;
-      }
-      .subtitle {
-        font-size: 13px;
-      }
-      button {
-        font-size: 14px;
-      }
-    }
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8677522095697857"
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8677522095697857"
      crossorigin="anonymous"></script>
+
 </head>
 <body>
   <div class="container">
@@ -175,108 +160,106 @@
 
   <script>
     function calculate() {
-      const gender = document.getElementById("gender").value;
-      const age = parseFloat(document.getElementById("age").value);
-      const height = parseFloat(document.getElementById("height").value);
-      const weight = parseFloat(document.getElementById("weight").value);
-      const neck = parseFloat(document.getElementById("neck").value);
-      const waist = parseFloat(document.getElementById("waist").value);
-      const hip = parseFloat(document.getElementById("hip").value);
-      const goal = document.getElementById("goal").value;
-      const diet = document.getElementById("diet").value;
+  const gender = document.getElementById("gender").value;
+  const age = parseFloat(document.getElementById("age").value);
+  const height = parseFloat(document.getElementById("height").value);
+  const weight = parseFloat(document.getElementById("weight").value);
+  const neck = parseFloat(document.getElementById("neck").value);
+  const waist = parseFloat(document.getElementById("waist").value);
+  const hip = parseFloat(document.getElementById("hip").value);
+  const goal = document.getElementById("goal").value;
+  const diet = document.getElementById("diet").value;
 
-      let bodyFat = 0;
-      if (gender === "Male") {
-        bodyFat = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
-      } else {
-        bodyFat = 495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.221 * Math.log10(height)) - 450;
-      }
-      bodyFat = bodyFat.toFixed(2);
-
-      let bmr;
-      if (gender === "Male") {
-        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-      } else {
-        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-      }
-
-      let calories = bmr * 1.375;
-      if (goal === "lose") calories -= 500;
-      if (goal === "gain") calories += 500;
-
-      document.getElementById("result").innerHTML =
-        `<strong>Estimated Body Fat:</strong> ${bodyFat}%<br><strong>Calorie Requirement:</strong> ${Math.round(calories)} kcal/day`;
-
-      let proteinPerKg = goal === "lose" ? 1.2 : 1.6; // g per kg of body weight
-let totalProtein = Math.round(weight * proteinPerKg); // target protein
-
-let targetCalories = Math.round(calories); // from earlier BMR logic
-
-let plan = "";
-
-if (diet === "veg") {
-  if (goal === "lose") {
-    plan = `
-      <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
-      - 🥣 <strong>Breakfast:</strong> Oats with almond milk and apple  
-        <br><small>~250 kcal, 10g protein</small><br>
-      - 🥬 <strong>Lunch:</strong> Mixed veg curry, 1 roti, salad  
-        <br><small>~350 kcal, 15g protein</small><br>
-      - 🍵 <strong>Snack:</strong> Green tea + sprouts  
-        <br><small>~150 kcal, 12g protein</small><br>
-      - 🍚 <strong>Dinner:</strong> Moong dal and brown rice  
-        <br><small>~400 kcal, 18g protein</small><br>
-      <br><strong>Total:</strong> ~1150 kcal, 55g protein
-    `;
-  } else {
-    plan = `
-      <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
-      - 🧀 <strong>Breakfast:</strong> Paneer sandwich + banana shake  
-        <br><small>~450 kcal, 25g protein</small><br>
-      - 🍛 <strong>Lunch:</strong> Chole with rice and salad  
-        <br><small>~500 kcal, 20g protein</small><br>
-      - 🥜 <strong>Snack:</strong> Peanut butter toast + dry fruits  
-        <br><small>~400 kcal, 15g protein</small><br>
-      - 🥘 <strong>Dinner:</strong> Veg khichdi + curd  
-        <br><small>~500 kcal, 18g protein</small><br>
-      <br><strong>Total:</strong> ~1850 kcal, 78g protein
-    `;
+  if (!age || !height || !weight || !neck || !waist || (gender === "Female" && !hip)) {
+    alert("Please fill in all required fields.");
+    return;
   }
-} else {
-  if (goal === "lose") {
-    plan = `
-      <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
-      - 🍳 <strong>Breakfast:</strong> Boiled eggs + apple  
-        <br><small>~250 kcal, 15g protein</small><br>
-      - 🥗 <strong>Lunch:</strong> Grilled chicken + salad  
-        <br><small>~400 kcal, 30g protein</small><br>
-      - 🍵 <strong>Snack:</strong> Boiled egg + green tea  
-        <br><small>~150 kcal, 10g protein</small><br>
-      - 🍲 <strong>Dinner:</strong> Chicken soup + steamed veggies  
-        <br><small>~400 kcal, 28g protein</small><br>
-      <br><strong>Total:</strong> ~1200 kcal, 83g protein
-    `;
+
+  let bodyFat = 0;
+  if (gender === "Male") {
+    bodyFat = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
   } else {
-    plan = `
-      <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
-      - 🐣 <strong>Breakfast:</strong> Omelet + milk + toast  
-        <br><small>~450 kcal, 25g protein</small><br>
-      - 🍗 <strong>Lunch:</strong> Chicken curry + rice  
-        <br><small>~600 kcal, 35g protein</small><br>
-      - 🥤 <strong>Snack:</strong> Protein shake + boiled eggs  
-        <br><small>~450 kcal, 30g protein</small><br>
-      - 🍖 <strong>Dinner:</strong> Egg curry + roti  
-        <br><small>~500 kcal, 30g protein</small><br>
-      <br><strong>Total:</strong> ~2000 kcal, 120g protein
-    `;
+    bodyFat = 495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.221 * Math.log10(height)) - 450;
   }
+  bodyFat = bodyFat.toFixed(2);
+
+  let bmr = gender === "Male"
+    ? 10 * weight + 6.25 * height - 5 * age + 5
+    : 10 * weight + 6.25 * height - 5 * age - 161;
+
+  let calories = bmr * 1.375;
+  if (goal === "lose") calories -= 500;
+  if (goal === "gain") calories += 500;
+
+  const targetCalories = Math.round(calories);
+  const totalProtein = Math.round(weight * (goal === "gain" ? 2 : 1.2));
+
+  document.getElementById("result").innerHTML =
+    `<strong>Estimated Body Fat:</strong> ${bodyFat}%<br><strong>Calorie Requirement:</strong> ${targetCalories} kcal/day`;
+
+  let plan = "";
+  if (diet === "veg") {
+    if (goal === "lose") {
+      plan = `
+        <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
+        - 🥣 <strong>Breakfast:</strong> Oats with almond milk and apple  
+          <br><small>~250 kcal, 10g protein</small><br>
+        - 🥬 <strong>Lunch:</strong> Mixed veg curry, 1 roti, salad  
+          <br><small>~350 kcal, 15g protein</small><br>
+        - 🍵 <strong>Snack:</strong> Green tea + sprouts  
+          <br><small>~150 kcal, 12g protein</small><br>
+        - 🍚 <strong>Dinner:</strong> Moong dal and brown rice  
+          <br><small>~400 kcal, 18g protein</small><br>
+        <br><strong>Total:</strong> ~1150 kcal, 55g protein
+      `;
+    } else {
+      plan = `
+        <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
+        - 🧀 <strong>Breakfast:</strong> Paneer sandwich + banana shake  
+          <br><small>~450 kcal, 25g protein</small><br>
+        - 🍛 <strong>Lunch:</strong> Chole with rice and salad  
+          <br><small>~500 kcal, 20g protein</small><br>
+        - 🥜 <strong>Snack:</strong> Peanut butter toast + dry fruits  
+          <br><small>~400 kcal, 15g protein</small><br>
+        - 🥘 <strong>Dinner:</strong> Veg khichdi + curd  
+          <br><small>~500 kcal, 18g protein</small><br>
+        <br><strong>Total:</strong> ~1850 kcal, 78g protein
+      `;
+    }
+  } else {
+    if (goal === "lose") {
+      plan = `
+        <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
+        - 🍳 <strong>Breakfast:</strong> Boiled eggs + apple  
+          <br><small>~250 kcal, 15g protein</small><br>
+        - 🥗 <strong>Lunch:</strong> Grilled chicken + salad  
+          <br><small>~400 kcal, 30g protein</small><br>
+        - 🍵 <strong>Snack:</strong> Boiled egg + green tea  
+          <br><small>~150 kcal, 10g protein</small><br>
+        - 🍲 <strong>Dinner:</strong> Chicken soup + steamed veggies  
+          <br><small>~400 kcal, 28g protein</small><br>
+        <br><strong>Total:</strong> ~1200 kcal, 83g protein
+      `;
+    } else {
+      plan = `
+        <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
+        - 🐣 <strong>Breakfast:</strong> Omelet + milk + toast  
+          <br><small>~450 kcal, 25g protein</small><br>
+        - 🍗 <strong>Lunch:</strong> Chicken curry + rice  
+          <br><small>~600 kcal, 35g protein</small><br>
+        - 🥤 <strong>Snack:</strong> Protein shake + boiled eggs  
+          <br><small>~450 kcal, 30g protein</small><br>
+        - 🍖 <strong>Dinner:</strong> Egg curry + roti  
+          <br><small>~500 kcal, 30g protein</small><br>
+        <br><strong>Total:</strong> ~2000 kcal, 120g protein
+      `;
+    }
+  }
+
+  document.getElementById("dietPlan").innerHTML =
+    `<h3>Your ${diet === "veg" ? "Vegetarian" : "Non-Vegetarian"} Diet Plan (${goal})</h3>` + plan;
 }
 
-
-
-      document.getElementById("dietPlan").innerHTML =
-        `<h3>Your ${diet === "veg" ? "Vegetarian" : "Non-Vegetarian"} Diet Plan (${goal})</h3>` + plan;
-    }
   </script>
 </body>
 </html>
